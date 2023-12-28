@@ -17,7 +17,7 @@ public class MemberTestService {
         memberRepository.save(member);
     }
 
-    public Map<String, List<MemberDto>> getMembers() {
+    public Map<String, List<Member>> getMembers() {
         return memberRepository.getMembers();
     }
 }

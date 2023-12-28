@@ -1,8 +1,10 @@
 package com.maple.member.model;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class Member {
     private String nickname;
     private String guild;
