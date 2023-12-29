@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { fetchData } from '../api/guild'
 import GuildItem from '../components/GuildItem'
 import { FaHome } from 'react-icons/fa'
-import { TbTriangleInvertedFilled } from 'react-icons/tb'
+import { RxTriangleDown } from 'react-icons/rx'
 import SearchBar from '../components/SearchBar'
 
 export default function GuildList() {
@@ -26,7 +26,7 @@ export default function GuildList() {
 
   const filteredGuilds = {}
   if (data) {
-      Object.keys(data.guilds).forEach(key => {
+    Object.keys(data.guilds).forEach(key => {
       filteredGuilds[key] = data.guilds[key].filter(item =>
         item.mainCharacterNickname.toLowerCase().includes(searchKeyword)
       )
@@ -37,20 +37,25 @@ export default function GuildList() {
   return (
     data && (
       <>
-        <div className="flex w-9/12 justify-between mx-auto my-3 items-center">
-          <p className="font-semibold text-lg">서버 : {data.world}</p>
-          <FaHome
-            className="text-xl cursor-pointer"
-            onClick={() => navigate('/')}
-          />
+        <div className="flex w-9/12 mx-auto my-5 items-center gap-x-2 justify-between">
+          <div className="flex items-center gap-x-2">
+            <FaHome
+              className="text-lg cursor-pointer"
+              onClick={() => navigate('/')}
+            />
+            <p className="font-semibold text-lg">서버 : {data.world}</p>
+          </div>
+          <div className="flex">
+            <SearchBar onSubmit={handleSearchSubmit} />
+          </div>
         </div>
-        <SearchBar onSubmit={handleSearchSubmit} />
+
         {data.guildIndex.map(guildName => {
           return (
             <>
               <div className="flex w-9/12 mx-auto my-5 gap-x-2.5 items-center">
                 <p className="font-semibold text-lg">{guildName}</p>
-                <TbTriangleInvertedFilled className="text-lg cursor-pointer" />
+                <RxTriangleDown className="text-xl cursor-pointer" />
               </div>
               <GuildItem
                 world={data.world}
