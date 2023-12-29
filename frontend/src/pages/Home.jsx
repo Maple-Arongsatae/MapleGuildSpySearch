@@ -51,8 +51,27 @@ export default function Home() {
 
   return (
     <>
+      <div className="flex flex-col items-center text-center w-9/12 border border-solid border-gray-400 rounded-lg bg-gray-400 my-14 mx-auto p-5">
+        <p className="text-2xl font-semibold">이중길드 유저 찾기</p>
+        본길드 및 부길드에 속해있는 길드원 중 이중길드 유저를 찾아냅니다. <br />
+        <br />
+        <p className="font-semibold">사용방법</p>
+        서버를 선택하고 길드명을 작성합니다.
+        <br />
+        부길드의 경우 + 버튼을 눌러 작성합니다.
+        <br />
+        <br />
+        길드명 작성이 완료되면 돋보기를 클릭해 주세요.
+        <br />
+        <br />
+        <p className="text-red-500 font-semibold">
+          최대 조회 가능 길드 수 : 10개
+        </p>
+        <br />
+        <p className="font-semibold">made by seop/arong</p>
+      </div>
       <div className="flex flex-col items-center">
-        <div className="w-72">
+        <div className="w-full max-w-[24rem] my-2.5">
           <Select label="Server">
             <Option>스카니아</Option>
             <Option>베라</Option>
@@ -71,7 +90,7 @@ export default function Home() {
           </Select>
         </div>
         {guildNameInput.map((guildNameInput, index) => (
-          <div className="relative flex w-full max-w-[24rem]">
+          <div className="relative flex w-full max-w-[24rem] my-2.5">
             <Input
               key={index}
               type="text"
@@ -93,13 +112,11 @@ export default function Home() {
             </Button>
           </div>
         ))}
-        <div>
-          <Button color="amber" onClick={addGuildNameInput}>
+        <div className="flex gap-x-1.5">
+          <Button color="amber" size="lg" onClick={addGuildNameInput}>
             <FaPlus />
           </Button>
-        </div>
-        <div>
-          <Button onClick={() => clickMove()}>
+          <Button size="lg" onClick={() => clickMove()}>
             <FaSearch />
           </Button>
         </div>
