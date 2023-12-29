@@ -1,8 +1,9 @@
-package com.maple.global.function;
+package com.maple.api.function;
 
-import com.maple.global.function.impl.CharacterFunction;
-import com.maple.global.function.impl.GuildFunction;
-import com.maple.global.function.impl.UnionFunction;
+import com.maple.global.exception.advice.CustomException;
+import com.maple.api.function.impl.CharacterFunction;
+import com.maple.api.function.impl.GuildFunction;
+import com.maple.api.function.impl.UnionFunction;
 import com.maple.member.model.Member;
 import com.maple.member.service.MemberService;
 import java.util.ArrayList;
@@ -18,8 +19,9 @@ public class FunctionService {
     private final GuildFunction gf;
     private final MemberService memberService;
 
-    public void profileMaker(String world, List<String> guilds) throws Exception {
+    public void profileMaker(String world, List<String> guilds) throws CustomException {
         List<Member> guildMembers = new ArrayList<>();
+
         for (String guild : guilds) {
             guildMembers.addAll((List<Member>)gf.getGuildMembers(guild, world));
         }
@@ -40,7 +42,7 @@ public class FunctionService {
         for (Member member : guildMembers) {
             String mainCharacterNickname = member.getMainCharacterNickname();
 
-            if (nicknames.contains(mainCharacterNickname)) {
+            if (nicknames.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
                 member.updateSpy(false);
             }
         }

@@ -1,8 +1,12 @@
 package com.maple.global.function.impl;
 
+import com.maple.api.function.impl.CharacterFunction;
+import com.maple.api.function.impl.GuildFunction;
+import com.maple.api.function.impl.UnionFunction;
+import com.maple.global.exception.advice.CustomException;
 import com.maple.member.model.Member;
+import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +18,11 @@ class FunctionTest {
 
     @Test
     @DisplayName("[길드] 새빨간 전체 길드원 조회")
-    void t1() {
+    void t1() throws CustomException {
         String guild = "새빨간";
         String world = "리부트";
 
-        List<Member> guildMembers = GF.getGuildMembers(guild, world);
+        List<Member> guildMembers = (List<Member>) GF.getGuildMembers(guild, world);
 
         for (Member member : guildMembers) {
             System.out.println(member);
@@ -27,7 +31,7 @@ class FunctionTest {
 
     @Test
     @DisplayName("[캐릭터] 김태섭 캐릭터 ocid 조회")
-    void t2() {
+    void t2() throws CustomException {
         String nickname = "김태섭";
 
         String characterOcid = CF.getCharacterOcid(nickname);
@@ -37,18 +41,18 @@ class FunctionTest {
 
     @Test
     @DisplayName("[캐릭터] 김태섭 캐릭터 길드 조회")
-    void t3() {
+    void t3() throws CustomException {
         String nickname = "김태섭";
 
         String characterOcid = CF.getCharacterOcid(nickname);
         String characterGuild = CF.getCharacterGuild(characterOcid);
 
-        System.out.println("'" + nickname +"' 의 길드 : " + characterGuild);
+        System.out.println("'" + nickname + "' 의 길드 : " + characterGuild);
     }
 
     @Test
     @DisplayName("[유니온] 김태섭의 최대 레벨 캐릭터 이름 조회")
-    void t4() {
+    void t4()  throws CustomException{
         String nickname = "김태섭";
         String world = "리부트";
         String result = "썹포터";

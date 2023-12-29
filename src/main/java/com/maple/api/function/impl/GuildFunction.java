@@ -1,7 +1,7 @@
-package com.maple.global.function.impl;
+package com.maple.api.function.impl;
 
-import com.maple.global.function.IFunction;
-import java.io.IOException;
+import com.maple.api.function.IFunction;
+import com.maple.global.exception.advice.CustomException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class GuildFunction implements IFunction {
-    public List<?> getGuildMembers(String guildName, String world) throws Exception {
+    public List<?> getGuildMembers(String guildName, String world) throws CustomException {
         String ocid = getGuildOcid(guildName, world);
         String url = "https://open.api.nexon.com/maplestory/v1/guild/basic?"
                 + "oguild_id=" + ocid
@@ -21,7 +21,7 @@ public class GuildFunction implements IFunction {
         return jsonConverter.getJsonArrData(guildName, rsData);
     }
 
-    private String getGuildOcid(String guildName, String world) throws IOException {
+    private String getGuildOcid(String guildName, String world) throws CustomException {
         String url = "https://open.api.nexon.com/maplestory/v1/guild/id?"
                 + "guild_name=" + URLEncoder.encode(guildName, StandardCharsets.UTF_8)
                 + "&world_name=" + URLEncoder.encode(world, StandardCharsets.UTF_8);

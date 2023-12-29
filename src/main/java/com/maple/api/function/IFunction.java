@@ -1,7 +1,7 @@
-package com.maple.global.function;
+package com.maple.api.function;
 
 import com.maple.api.Api;
-import com.maple.global.json.JsonConverter;
+import com.maple.global.util.json.JsonConverter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

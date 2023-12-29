@@ -22,7 +22,6 @@ public class MemberTestRepository {
             }
         }
     }
-
     public Map<String, List<Member>> getMembers() {
         return ALL_GUILDS;
     }
