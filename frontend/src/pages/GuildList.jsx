@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { fetchData } from '../api/guild'
 import GuildItem from '../components/GuildItem'
 import { FaHome } from 'react-icons/fa'
 import { TbTriangleInvertedFilled } from 'react-icons/tb'
+import SearchBar from '../components/SearchBar'
 
 export default function GuildList() {
   const location = useLocation()
@@ -18,6 +19,20 @@ export default function GuildList() {
     queryFn: () => fetchData(server, guildNameInput),
   })
 
+  const [searchKeyword, setSearchKeyword] = useState('')
+  const handleSearchSubmit = keyword => {
+    setSearchKeyword(keyword)
+  }
+
+  const filteredGuilds = {}
+  if (data) {
+      Object.keys(data.guilds).forEach(key => {
+      filteredGuilds[key] = data.guilds[key].filter(item =>
+        item.mainCharacterNickname.toLowerCase().includes(searchKeyword)
+      )
+    })
+  }
+
   console.log(data)
   return (
     data && (
@@ -29,6 +44,7 @@ export default function GuildList() {
             onClick={() => navigate('/')}
           />
         </div>
+        <SearchBar onSubmit={handleSearchSubmit} />
         {data.guildIndex.map(guildName => {
           return (
             <>
@@ -39,7 +55,8 @@ export default function GuildList() {
               <GuildItem
                 world={data.world}
                 guildIndex={data.guildIndex}
-                guilds={data.guilds[guildName]}
+                // guilds={data.guilds[guildName]}
+                guilds={filteredGuilds[guildName]}
               />
             </>
           )

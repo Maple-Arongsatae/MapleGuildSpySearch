@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Typography } from '@material-tailwind/react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchData } from '../api/guild'
-import SearchBar from '../components/SearchBar'
 
 export default function GuildItem({ world, guilds, guildIndex }) {
   console.log(world)
@@ -16,24 +15,9 @@ export default function GuildItem({ world, guilds, guildIndex }) {
   //   })
   //   console.log(data)
 
-  const [searchKeyword, setSearchKeyword] = useState('')
-  const handleSearchSubmit = keyword => {
-    setSearchKeyword(keyword)
-  }
-
-  const filteredGuilds = {}
-  Object.keys(guilds).forEach(key => {
-    filteredGuilds[key] = guilds[key].filter(item =>
-      item.mainCharacterNickname.toLowerCase().includes(searchKeyword)
-    )
-  })
-
-  console.log(filteredGuilds)
-
   return (
     <>
       <Card className="h-full w-9/12 overflow-scroll mx-auto">
-        <SearchBar onSubmit={handleSearchSubmit} />
         <h1>서버 : {world}</h1>
         <table className="w-full min-w-max table-auto text-left">
           <thead>
