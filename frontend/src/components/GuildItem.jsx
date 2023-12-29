@@ -16,25 +16,25 @@ export default function GuildItem({ world, guilds, guildIndex }) {
   //   })
   //   console.log(data)
 
-  const [searchKeyword, setSearchKeyword] = useState('');
-	const handleSearchSubmit = (keyword) => {
-		setSearchKeyword(keyword);
-	};
+  const [searchKeyword, setSearchKeyword] = useState('')
+  const handleSearchSubmit = keyword => {
+    setSearchKeyword(keyword)
+  }
 
-  const filteredGuilds = {};
+  const filteredGuilds = {}
   Object.keys(guilds).forEach(key => {
-    filteredGuilds[key] = guilds[key].filter(item => item.mainCharacterNickname.toLowerCase().includes(searchKeyword));
+    filteredGuilds[key] = guilds[key].filter(item =>
+      item.mainCharacterNickname.toLowerCase().includes(searchKeyword)
+    )
   })
 
-  console.log(filteredGuilds);
+  console.log(filteredGuilds)
 
   return (
     <>
-      <SearchBar
-				onSubmit={handleSearchSubmit}
-			/>
-      <h1>서버 : {world}</h1>
-      <Card className="h-full w-full overflow-scroll">
+      <Card className="h-full w-9/12 overflow-scroll mx-auto">
+        <SearchBar onSubmit={handleSearchSubmit} />
+        <h1>서버 : {world}</h1>
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -55,73 +55,73 @@ export default function GuildItem({ world, guilds, guildIndex }) {
             </tr>
           </thead>
           <tbody>
-            {guildIndex.map(guildTitle =>
-              filteredGuilds[guildTitle].map(
-                (
-                  {
-                    nickname,
-                    guild,
-                    mainCharacterNickname,
-                    mainCharacterGuild,
-                    spy,
-                  },
-                  index
-                ) => (
-                  <tr
-                    key={index}
-                    className={
-                      spy
-                        ? 'bg-red-500 bg-opacity-50'
-                        : 'even:bg-blue-gray-50/50'
-                    }
-                  >
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {nickname}
-                      </Typography>
-                    </td>
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {guild}
-                      </Typography>
-                    </td>
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {mainCharacterNickname}
-                      </Typography>
-                    </td>
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {mainCharacterGuild}
-                      </Typography>
-                    </td>
-                    <td className="p-4">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {spy ? 'O' : 'X'}
-                      </Typography>
-                    </td>
-                  </tr>
-                )
+            {guilds.map(
+              (
+                {
+                  nickname,
+                  guild,
+                  mainCharacterNickname,
+                  mainCharacterGuild,
+                  spy,
+                },
+                index
+              ) => (
+                <tr
+                  key={index}
+                  className={
+                    mainCharacterNickname === '확인필요'
+                      ? 'bg-yellow-300'
+                      : 'even:bg-blue-gray-50/50' && spy
+                      ? 'bg-red-500 bg-opacity-50'
+                      : 'even:bg-blue-gray-50/50'
+                  }
+                >
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {nickname}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {guild}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {mainCharacterNickname}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {mainCharacterGuild}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {spy ? 'O' : 'X'}
+                    </Typography>
+                  </td>
+                </tr>
               )
             )}
           </tbody>
