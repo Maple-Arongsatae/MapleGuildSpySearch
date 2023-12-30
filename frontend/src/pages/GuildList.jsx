@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { fetchData } from '../api/guild'
 import GuildItem from '../components/GuildItem'
 import { FaHome } from 'react-icons/fa'
-import { TbTriangleInvertedFilled } from 'react-icons/tb'
+import { RxTriangleDown } from 'react-icons/rx'
 import SearchBar from '../components/SearchBar'
 
 export default function GuildList() {
@@ -26,39 +26,59 @@ export default function GuildList() {
 
   const filteredGuilds = {}
   if (data) {
-      Object.keys(data.guilds).forEach(key => {
+    Object.keys(data.guilds).forEach(key => {
       filteredGuilds[key] = data.guilds[key].filter(item =>
         item.mainCharacterNickname.toLowerCase().includes(searchKeyword)
       )
     })
   }
 
-  console.log(data)
+  const [expandedGuilds, setExpandedGuilds] = useState({})
+
+  const toggleGuild = guildName => {
+    setExpandedGuilds(prevState => ({
+      ...prevState,
+      [guildName]: !prevState[guildName],
+    }))
+  }
+
   return (
     data && (
       <>
-        <div className="flex w-9/12 justify-between mx-auto my-3 items-center">
-          <p className="font-semibold text-lg">서버 : {data.world}</p>
-          <FaHome
-            className="text-xl cursor-pointer"
-            onClick={() => navigate('/')}
-          />
+        <div className="flex w-9/12 mx-auto my-5 items-center gap-x-2 justify-between">
+          <div className="flex items-center gap-x-2">
+            <FaHome
+              className="text-lg cursor-pointer"
+              onClick={() => navigate('/')}
+            />
+            <p className="font-semibold text-lg">서버 : {data.world}</p>
+          </div>
+          <div className="flex">
+            <SearchBar onSubmit={handleSearchSubmit} />
+          </div>
         </div>
-        <SearchBar onSubmit={handleSearchSubmit} />
+
         {data.guildIndex.map(guildName => {
           return (
-            <>
-              <div className="flex w-9/12 mx-auto my-5 gap-x-2.5 items-center">
+            <div key={guildName}>
+              <div className="flex w-9/12 mx-auto my-5 py-1 gap-x-2.5 items-center border-b border-gray-500">
                 <p className="font-semibold text-lg">{guildName}</p>
-                <TbTriangleInvertedFilled className="text-lg cursor-pointer" />
+                <RxTriangleDown
+                  className={`text-xl cursor-pointer transition-transform ${
+                    expandedGuilds[guildName] ? 'transform rotate-180' : ''
+                  }`}
+                  onClick={() => toggleGuild(guildName)}
+                />
               </div>
-              <GuildItem
-                world={data.world}
-                guildIndex={data.guildIndex}
-                // guilds={data.guilds[guildName]}
-                guilds={filteredGuilds[guildName]}
-              />
-            </>
+              {expandedGuilds[guildName] && (
+                <GuildItem
+                  world={data.world}
+                  guildIndex={data.guildIndex}
+                  // guilds={data.guilds[guildName]}
+                  guilds={filteredGuilds[guildName]}
+                />
+              )}
+            </div>
           )
         })}
       </>

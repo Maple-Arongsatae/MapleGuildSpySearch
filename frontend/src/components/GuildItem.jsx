@@ -7,7 +7,7 @@ export default function GuildItem({ world, guilds, guildIndex }) {
   console.log(world)
   console.log(guilds)
   console.log(guildIndex)
-  const TABLE_HEAD = ['길드원', '소속길드', '본캐릭', '본캐릭 길드', '스파이']
+  const TABLE_HEAD = ['길드원', '소속길드', '본캐릭', '본캐릭 길드']
 
   //   const { data, isLoading, isError } = useQuery({
   //     queryKey: 'guildData',
@@ -18,7 +18,6 @@ export default function GuildItem({ world, guilds, guildIndex }) {
   return (
     <>
       <Card className="h-full w-9/12 overflow-scroll mx-auto">
-        <h1>서버 : {world}</h1>
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -53,7 +52,7 @@ export default function GuildItem({ world, guilds, guildIndex }) {
                 <tr
                   key={index}
                   className={
-                    mainCharacterNickname === '확인필요'
+                    mainCharacterGuild === '확인필요'
                       ? 'bg-yellow-300'
                       : 'even:bg-blue-gray-50/50' && spy
                       ? 'bg-red-500 bg-opacity-50'
@@ -96,7 +95,7 @@ export default function GuildItem({ world, guilds, guildIndex }) {
                       {mainCharacterGuild}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  {/* <td className="p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
@@ -104,7 +103,7 @@ export default function GuildItem({ world, guilds, guildIndex }) {
                     >
                       {spy ? 'O' : 'X'}
                     </Typography>
-                  </td>
+                  </td> */}
                 </tr>
               )
             )}
