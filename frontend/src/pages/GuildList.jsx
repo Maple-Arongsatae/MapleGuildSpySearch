@@ -33,7 +33,15 @@ export default function GuildList() {
     })
   }
 
-  console.log(data)
+  const [expandedGuilds, setExpandedGuilds] = useState({})
+
+  const toggleGuild = guildName => {
+    setExpandedGuilds(prevState => ({
+      ...prevState,
+      [guildName]: !prevState[guildName],
+    }))
+  }
+
   return (
     data && (
       <>
@@ -52,18 +60,25 @@ export default function GuildList() {
 
         {data.guildIndex.map(guildName => {
           return (
-            <>
-              <div className="flex w-9/12 mx-auto my-5 gap-x-2.5 items-center">
+            <div key={guildName}>
+              <div className="flex w-9/12 mx-auto my-5 py-1 gap-x-2.5 items-center border-b border-gray-500">
                 <p className="font-semibold text-lg">{guildName}</p>
-                <RxTriangleDown className="text-xl cursor-pointer" />
+                <RxTriangleDown
+                  className={`text-xl cursor-pointer transition-transform ${
+                    expandedGuilds[guildName] ? 'transform rotate-180' : ''
+                  }`}
+                  onClick={() => toggleGuild(guildName)}
+                />
               </div>
-              <GuildItem
-                world={data.world}
-                guildIndex={data.guildIndex}
-                // guilds={data.guilds[guildName]}
-                guilds={filteredGuilds[guildName]}
-              />
-            </>
+              {expandedGuilds[guildName] && (
+                <GuildItem
+                  world={data.world}
+                  guildIndex={data.guildIndex}
+                  // guilds={data.guilds[guildName]}
+                  guilds={filteredGuilds[guildName]}
+                />
+              )}
+            </div>
           )
         })}
       </>
