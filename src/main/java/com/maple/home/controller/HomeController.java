@@ -7,9 +7,11 @@ import com.maple.home.util.dto.ErrorDto;
 import com.maple.home.util.dto.ResponseDTO;
 import com.maple.home.util.dto.RqDto;
 import com.maple.home.util.dto.RsDto;
+import com.maple.home.util.validate.ListDuplicateValidator;
 import com.maple.member.model.Member;
 import com.maple.member.service.MemberService;
 import com.maple.member.service.MemberTestService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -30,14 +32,18 @@ public class HomeController {
     private final MemberTestService memberTestService;
     private final FunctionService fs;
 
+    private static final String LOG_PATH = "[HomeController.getSpy]";
+
     @PostMapping("/spy")
-    public ResponseDTO getSpy(@RequestBody RqDto rqDto) throws CustomException {
+    public ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
         fs.profileMaker(rqDto.getWorld(), rqDto.getGuilds());
-        log.info("[HomeController.getSpy] API Count : '" + Api.getCount());
+        log.info(LOG_PATH+ " 데이터 조회 완료");
+        log.info(LOG_PATH + " API Count : '" + Api.getCount());
+
         return RsDto.builder()
                 .code(200)
                 .world(rqDto.getWorld())
-                .guildIndex(rqDto.getGuilds())
+                .guildIndex(ListDuplicateValidator.removeDuplicates(rqDto.getGuilds()))
                 .guilds(memberService.getMembers())
                 .build();
     }
