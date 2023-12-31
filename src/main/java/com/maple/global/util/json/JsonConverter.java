@@ -13,22 +13,35 @@ import org.json.simple.parser.ParseException;
 public class JsonConverter {
     private static final String CHECK_DATA = "확인필요";
 
-    public String getJsonObjData(String rsData, String jsonDataName) {
+    /**
+     * Json 데이터 중 단건에 대한 데이터 요청
+     * @param jsonStr
+     * @param jsonColumnName
+     * @return
+     */
+    public String getJsonObjData(String jsonStr, String jsonColumnName) {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(rsData);
-            return jsonObject.get(jsonDataName).toString();
+            JSONObject jsonObject = (JSONObject) parser.parse(jsonStr);
+            return jsonObject.get(jsonColumnName).toString();
         } catch (Exception e) {
             return CHECK_DATA;
         }
     }
 
-    public List<?> getJsonArrData(String guildName, String rsData) throws CustomException {
+    /**
+     * Json 데이터 중 배열에 대한 데이터 요청
+     * @param guildName
+     * @param jsonStr
+     * @return
+     * @throws CustomException
+     */
+    public List<?> getJsonArrData(String guildName, String jsonStr) throws CustomException {
         try {
             List<Member> members = new ArrayList<>();
 
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(rsData);
+            JSONObject jsonObject = (JSONObject) parser.parse(jsonStr);
 
             // JSON Array
             JSONArray jsonMembers = (JSONArray) jsonObject.get("guild_member");
