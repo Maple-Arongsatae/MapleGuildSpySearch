@@ -23,7 +23,7 @@ public class NotProd {
             member=new Member(); member.addNickname("메르세르베");member.addMainNickname("메르세르베");member.updateSpy(false);member.addGuild("새빨간");member.addMainCharterGuild("새빨간");memberService.save(member);
             member=new Member(); member.addNickname("홀심만받음");member.addMainNickname("홀심만받음");member.updateSpy(false);member.addGuild("새빨간");member.addMainCharterGuild("새빨간");memberService.save(member);
             member=new Member(); member.addNickname("이규명");member.addMainNickname("이규명");member.updateSpy(false);member.addGuild("새빨간");member.addMainCharterGuild("새빨간");memberService.save(member);
-            member=new Member(); member.addNickname("Luvve");member.addMainNickname("니상상");member.updateSpy(false);member.addGuild("새빨간");member.addMainCharterGuild("오순도순");memberService.save(member);
+            member=new Member(); member.addNickname("Luvve");member.addMainNickname("니상상");member.updateSpy(true);member.addGuild("새빨간");member.addMainCharterGuild("오순도순");memberService.save(member);
             member=new Member(); member.addNickname("앵벌새");member.addMainNickname("앵벌새");member.updateSpy(false);member.addGuild("새빨간");member.addMainCharterGuild("새빨간");memberService.save(member);
             member=new Member(); member.addNickname("햐야햐야하야");member.addMainNickname("확인필요");member.updateSpy(true);member.addGuild("새빨간");member.addMainCharterGuild("확인필요");memberService.save(member);
             member=new Member(); member.addNickname("맹견");member.addMainNickname("맹견");member.updateSpy(false);member.addGuild("새빨간");member.addMainCharterGuild("새빨간");memberService.save(member);
