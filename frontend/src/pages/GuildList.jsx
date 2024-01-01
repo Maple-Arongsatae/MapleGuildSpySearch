@@ -6,6 +6,7 @@ import GuildItem from '../components/GuildItem'
 import { FaHome } from 'react-icons/fa'
 import { RxTriangleDown } from 'react-icons/rx'
 import SearchBar from '../components/SearchBar'
+import { Spinner } from '@material-tailwind/react'
 
 export default function GuildList() {
   const location = useLocation()
@@ -40,6 +41,15 @@ export default function GuildList() {
       ...prevState,
       [guildName]: !prevState[guildName],
     }))
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-end gap-8 items-center mt-28">
+        <Spinner className="h-12 w-12" />
+        <p>조회한 길드 갯수당 40초 미만 걸립니다.</p>
+      </div>
+    )
   }
 
   return (
