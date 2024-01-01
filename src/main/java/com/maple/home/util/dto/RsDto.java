@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public class RsDto {
+public class RsDto implements ResponseDTO{
     private long code;
     private String world;
     private List<String> guildIndex;

@@ -17,5 +17,4 @@ public class MemberDto {
     private String mainCharacterNickname;
     private String mainCharacterGuild;
     private boolean spy;
-
 }

@@ -1,7 +1,7 @@
-package com.maple.global.function.impl;
+package com.maple.api.function.impl;
 
-import com.maple.global.function.IFunction;
-import java.io.IOException;
+import com.maple.global.exception.advice.CustomException;
+import com.maple.api.function.IFunction;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,15 @@ import org.springframework.stereotype.Component;
 public class UnionFunction implements IFunction {
     private static final String CHECK_DATA = "확인필요";
 
-    public String mainCharacterNickname(String ocid, String world) throws IOException {
+
+    /**
+     * ocid를통해 월드에 있는 최고 레벨 캐릭터 닉네임 조회
+     * @param ocid
+     * @param world
+     * @return nickname(String)
+     * @throws CustomException (확인 되지 않는 경우)
+     */
+    public String mainCharacterNickname(String ocid, String world) throws CustomException {
         if (ocid.equals(CHECK_DATA)) {
             return CHECK_DATA;
         }

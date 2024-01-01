@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemberRepository {
+
     private static final Map<String, List<Member>> ALL_GUILDS = new HashMap<>();
     private static final List<String> ALL_NICKNAMES = new ArrayList<>();
 
@@ -25,10 +26,6 @@ public class MemberRepository {
         }
     }
 
-    public Map<String, List<Member>> getMembers() {
-        return ALL_GUILDS;
-    }
-
     public List<Member> getAllMembers() {
         return ALL_GUILDS.values()
                 .stream()
@@ -38,6 +35,15 @@ public class MemberRepository {
 
     public List<String> getNicknames() {
         return ALL_NICKNAMES;
+    }
+
+    public Map<String, List<Member>> getMembers() {
+        return ALL_GUILDS;
+    }
+
+    public void clear() {
+        ALL_GUILDS.clear();
+        ALL_NICKNAMES.clear();
     }
 }
 
