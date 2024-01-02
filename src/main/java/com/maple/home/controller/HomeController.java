@@ -14,9 +14,12 @@ import com.maple.member.service.MemberTestService;
 import jakarta.validation.Valid;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +41,7 @@ public class HomeController {
     private static final String LOG_HOME = "[" + HomeController.class.getName() + "]";
 
     @PostMapping("/spy")
-    public ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
+    public synchronized ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
         LocalDateTime startTime = LocalDateTime.now();
         fs.profileMaker(rqDto.getWorld(), rqDto.getGuilds());
         LocalDateTime endTime = LocalDateTime.now();
