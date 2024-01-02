@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class MemberRepository {
 
     private Map<String, List<Member>> allGuilds;
