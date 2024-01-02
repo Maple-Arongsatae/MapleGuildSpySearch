@@ -40,5 +40,10 @@ public class MemberRepository {
     public Map<String, List<Member>> getMembers() {
         return ALL_GUILDS;
     }
+
+    public void clear() {
+        ALL_GUILDS.clear();
+        ALL_NICKNAMES.clear();
+    }
 }
 

@@ -17,6 +17,9 @@ public class MemberService {
     public void save(Member member) {
         memberRepository.save(member);
     }
+    public void reset() {
+        memberRepository.clear();
+    }
 
     public Map<String, List<MemberDto>> getMembers() {
         Map<String, List<Member>> allMembers = memberRepository.getMembers();
@@ -30,16 +33,6 @@ public class MemberService {
                 ));
     }
 
-    private MemberDto convertToDto(Member member) {
-        return MemberDto.builder()
-                .nickname(member.getNickname())
-                .guild(member.getGuild())
-                .mainCharacterNickname(member.getMainCharacterNickname())
-                .mainCharacterGuild(member.getMainCharacterGuild())
-                .spy(member.isSpy())
-                .build();
-    }
-
     public void updateNicknames() {
         for (Member member : memberRepository.getAllMembers()) {
             memberRepository.getNicknames().add(member.getNickname());
@@ -48,6 +41,16 @@ public class MemberService {
 
     public List<String> getNicknames() {
         return memberRepository.getNicknames();
+    }
+
+    private MemberDto convertToDto(Member member) {
+        return MemberDto.builder()
+                .nickname(member.getNickname())
+                .guild(member.getGuild())
+                .mainCharacterNickname(member.getMainCharacterNickname())
+                .mainCharacterGuild(member.getMainCharacterGuild())
+                .spy(member.isSpy())
+                .build();
     }
 }
 

@@ -12,6 +12,13 @@ import lombok.Getter;
 public class Api {
     @Getter
     private static Long count = 0L;
+
+    /**
+     * url을 통해 api 호출 및 결과 값 반환
+     * @param urlString
+     * @return josnData(String)
+     * @throws CustomException
+     */
     public String getRequest(String urlString) throws CustomException {
         try {
             count++;
