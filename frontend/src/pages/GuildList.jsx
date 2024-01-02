@@ -45,6 +45,11 @@ export default function GuildList() {
     }))
   }
 
+  const handleScrollToTop = () => {
+    console.log('확인')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   if (isLoading) {
     return (
       <div className="flex flex-col gap-8 items-center mt-28">
@@ -57,11 +62,6 @@ export default function GuildList() {
   return (
     data && (
       <>
-        <div className="flex w-max gap-4 ml-auto relative">
-          <Button color="amber" className="fixed right-2.5 bottom-2.5">
-            <FaArrowUp />
-          </Button>
-        </div>
         <div className="flex w-9/12 mx-auto my-5 items-center gap-x-2 justify-between">
           <div className="flex items-center gap-x-2">
             <FaHome
@@ -97,6 +97,15 @@ export default function GuildList() {
             </div>
           )
         })}
+        <div className="flex w-max gap-4 ml-auto fixed right-14 bottom-2.5">
+          <Button
+            color="amber"
+            className="border rounded-full"
+            onClick={handleScrollToTop}
+          >
+            <FaArrowUp className="cursor-pointe" />
+          </Button>
+        </div>
       </>
     )
   )
