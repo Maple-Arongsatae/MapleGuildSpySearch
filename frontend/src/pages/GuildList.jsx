@@ -6,6 +6,9 @@ import GuildItem from '../components/GuildItem'
 import { FaHome } from 'react-icons/fa'
 import { RxTriangleDown } from 'react-icons/rx'
 import SearchBar from '../components/SearchBar'
+import { Spinner } from '@material-tailwind/react'
+import { Button } from '@material-tailwind/react'
+import { FaArrowUp } from 'react-icons/fa'
 
 export default function GuildList() {
   const location = useLocation()
@@ -14,7 +17,7 @@ export default function GuildList() {
   const server = location.state.server
   const guildNameInput = location.state.guilds
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['guildData', server, guildNameInput],
     queryFn: () => fetchData(server, guildNameInput),
   })
@@ -40,6 +43,20 @@ export default function GuildList() {
       ...prevState,
       [guildName]: !prevState[guildName],
     }))
+  }
+
+  const handleScrollToTop = () => {
+    console.log('확인')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-8 items-center mt-28">
+        <Spinner className="h-12 w-12" />
+        <p>조회한 길드 갯수당 40초 미만 걸립니다.</p>
+      </div>
+    )
   }
 
   return (
@@ -74,13 +91,21 @@ export default function GuildList() {
                 <GuildItem
                   world={data.world}
                   guildIndex={data.guildIndex}
-                  // guilds={data.guilds[guildName]}
                   guilds={filteredGuilds[guildName]}
                 />
               )}
             </div>
           )
         })}
+        <div className="flex w-max gap-4 ml-auto fixed right-14 bottom-2.5">
+          <Button
+            color="amber"
+            className="border rounded-full"
+            onClick={handleScrollToTop}
+          >
+            <FaArrowUp className="cursor-pointe" />
+          </Button>
+        </div>
       </>
     )
   )

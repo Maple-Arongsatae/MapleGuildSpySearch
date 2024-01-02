@@ -11,27 +11,24 @@ import { useNavigate } from 'react-router-dom'
 export default function Home() {
   const navigate = useNavigate()
   const [selectedServer, setSelectedServer] = useState('')
-  const [guildNameInput, setGuildNameInput] = useState(['']) // 초기에 하나의 입력창을 가진 배열을 설정
+  const [guildNameInput, setGuildNameInput] = useState([''])
 
   const handleServerChange = value => {
     setSelectedServer(value)
   }
 
-  // 새로운 입력창을 추가하는 함수
   const addGuildNameInput = () => {
     if (guildNameInput.length < 10) {
       setGuildNameInput([...guildNameInput, ''])
     }
   }
 
-  // 입력창의 값이 변경될 때 호출되는 함수
   const handleGuildNameInputChange = (index, value) => {
     const newGuildNameInput = [...guildNameInput]
     newGuildNameInput[index] = value
     setGuildNameInput(newGuildNameInput)
   }
 
-  // 입력창을 삭제하는 함수
   const removeGuildNameInput = index => {
     console.log(guildNameInput.length)
     if (guildNameInput.length > 1) {
@@ -41,16 +38,13 @@ export default function Home() {
     }
   }
 
-  // const [guildName, setGuildName] = useState('')
-  // const onChange = ({ target }) => setGuildName(target.value)
-
   const clickMove = () => {
     console.log(selectedServer)
     console.log(guildNameInput)
     navigate('/guild', {
       state: {
         server: selectedServer,
-        guilds: guildNameInput.filter(name => name.trim() !== ''), // 빈 값은 필터링하여 전달
+        guilds: guildNameInput.filter(name => name.trim() !== ''),
       },
     })
   }
@@ -123,14 +117,6 @@ export default function Home() {
                 />
               }
             />
-            {/* <Button
-              size="sm"
-              color="red"
-              className="!absolute right-1 top-1 rounded"
-              onClick={() => removeGuildNameInput(index)}
-            >
-              <FaTrashAlt />
-            </Button> */}
           </div>
         ))}
         <div className="flex gap-x-1.5">

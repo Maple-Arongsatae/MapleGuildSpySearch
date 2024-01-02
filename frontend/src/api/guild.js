@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const fetchData = async (server, guilds) => {
   const response = await axios.post(
-    '/maple/guild/spy/test',
+    '/maple/guild/spy',
     {
       world: server,
       guilds: guilds,
