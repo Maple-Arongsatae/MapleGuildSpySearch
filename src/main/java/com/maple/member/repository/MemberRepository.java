@@ -1,7 +1,6 @@
 package com.maple.member.repository;
 
 import com.maple.member.model.Member;
-import com.maple.member.util.dto.MemberDto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,38 +11,38 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MemberRepository {
 
-    private static final Map<String, List<Member>> ALL_GUILDS = new HashMap<>();
-    private static final List<String> ALL_NICKNAMES = new ArrayList<>();
+    private Map<String, List<Member>> allGuilds;
+    private List<String> allNicknames;
 
     public void save(Member member) {
-        ALL_GUILDS.computeIfAbsent(member.getGuild(), k -> new ArrayList<>());
+        allGuilds.computeIfAbsent(member.getGuild(), k -> new ArrayList<>());
 
-        for (String key : ALL_GUILDS.keySet()) {
+        for (String key : allGuilds.keySet()) {
             if (member.getGuild().equals(key)) {
-                ALL_GUILDS.get(key)
+                allGuilds.get(key)
                         .add(member);
             }
         }
     }
 
     public List<Member> getAllMembers() {
-        return ALL_GUILDS.values()
+        return allGuilds.values()
                 .stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
     public List<String> getNicknames() {
-        return ALL_NICKNAMES;
+        return allNicknames;
     }
 
     public Map<String, List<Member>> getMembers() {
-        return ALL_GUILDS;
+        return allGuilds;
     }
 
-    public void clear() {
-        ALL_GUILDS.clear();
-        ALL_NICKNAMES.clear();
+    public void createObj() {
+        allGuilds = new HashMap<>();
+        allNicknames = new ArrayList<>();
     }
 }
 

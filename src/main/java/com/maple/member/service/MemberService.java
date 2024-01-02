@@ -17,8 +17,8 @@ public class MemberService {
     public void save(Member member) {
         memberRepository.save(member);
     }
-    public void reset() {
-        memberRepository.clear();
+    public void createObj() {
+        memberRepository.createObj();
     }
 
     public Map<String, List<MemberDto>> getMembers() {

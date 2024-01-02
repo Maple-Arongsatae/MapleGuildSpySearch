@@ -8,9 +8,7 @@ import com.maple.home.util.validate.ListDuplicateValidator;
 import com.maple.member.model.Member;
 import com.maple.member.service.MemberService;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +29,7 @@ public class FunctionService {
      * @throws CustomException
      */
     public void profileMaker(String world, List<String> guilds) throws CustomException {
-        memberService.reset(); // 메모리 DB 초기화
+        memberService.createObj(); // 메모리 DB 초기화
 
         List<String> uniqueGuilds = ListDuplicateValidator.removeDuplicates(guilds); // 길드 중복 값 제거
         List<Member> guildMembers = new ArrayList<>();
