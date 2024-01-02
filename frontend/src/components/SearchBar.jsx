@@ -9,7 +9,6 @@ const SearchBar = ({ onSubmit }) => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    // onSubmit(e.target.elements.filter.value)
     onSubmit(filterValue)
   }
 

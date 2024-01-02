@@ -7,6 +7,8 @@ import { FaHome } from 'react-icons/fa'
 import { RxTriangleDown } from 'react-icons/rx'
 import SearchBar from '../components/SearchBar'
 import { Spinner } from '@material-tailwind/react'
+import { Button } from '@material-tailwind/react'
+import { FaArrowUp } from 'react-icons/fa'
 
 export default function GuildList() {
   const location = useLocation()
@@ -15,7 +17,7 @@ export default function GuildList() {
   const server = location.state.server
   const guildNameInput = location.state.guilds
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['guildData', server, guildNameInput],
     queryFn: () => fetchData(server, guildNameInput),
   })
@@ -45,7 +47,7 @@ export default function GuildList() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-end gap-8 items-center mt-28">
+      <div className="flex flex-col gap-8 items-center mt-28">
         <Spinner className="h-12 w-12" />
         <p>조회한 길드 갯수당 40초 미만 걸립니다.</p>
       </div>
@@ -55,6 +57,11 @@ export default function GuildList() {
   return (
     data && (
       <>
+        <div className="flex w-max gap-4 ml-auto relative">
+          <Button color="amber" className="fixed right-2.5 bottom-2.5">
+            <FaArrowUp />
+          </Button>
+        </div>
         <div className="flex w-9/12 mx-auto my-5 items-center gap-x-2 justify-between">
           <div className="flex items-center gap-x-2">
             <FaHome
@@ -84,7 +91,6 @@ export default function GuildList() {
                 <GuildItem
                   world={data.world}
                   guildIndex={data.guildIndex}
-                  // guilds={data.guilds[guildName]}
                   guilds={filteredGuilds[guildName]}
                 />
               )}

@@ -1,19 +1,12 @@
 import React from 'react'
 import { Card, Typography } from '@material-tailwind/react'
-import { useQuery } from '@tanstack/react-query'
-import { fetchData } from '../api/guild'
 
 export default function GuildItem({ world, guilds, guildIndex }) {
   console.log(world)
   console.log(guilds)
   console.log(guildIndex)
-  const TABLE_HEAD = ['길드원', '소속길드', '본캐릭', '본캐릭 길드']
 
-  //   const { data, isLoading, isError } = useQuery({
-  //     queryKey: 'guildData',
-  //     queryFn: fetchData,
-  //   })
-  //   console.log(data)
+  const TABLE_HEAD = ['길드원', '소속길드', '본캐릭', '본캐릭 길드']
 
   return (
     <>
@@ -95,15 +88,6 @@ export default function GuildItem({ world, guilds, guildIndex }) {
                       {mainCharacterGuild}
                     </Typography>
                   </td>
-                  {/* <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {spy ? 'O' : 'X'}
-                    </Typography>
-                  </td> */}
                 </tr>
               )
             )}
