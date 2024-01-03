@@ -30,7 +30,6 @@ export default function Home() {
   }
 
   const removeGuildNameInput = index => {
-    console.log(guildNameInput.length)
     if (guildNameInput.length > 1) {
       const newGuildNameInput = [...guildNameInput]
       newGuildNameInput.splice(index, 1)
@@ -39,8 +38,6 @@ export default function Home() {
   }
 
   const clickMove = () => {
-    console.log(selectedServer)
-    console.log(guildNameInput)
     navigate('/guild', {
       state: {
         server: selectedServer,

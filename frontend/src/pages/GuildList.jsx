@@ -13,7 +13,6 @@ import { FaArrowUp } from 'react-icons/fa'
 export default function GuildList() {
   const location = useLocation()
   const navigate = useNavigate()
-  console.log(location.state.server)
   const server = location.state.server
   const guildNameInput = location.state.guilds
 
@@ -46,7 +45,6 @@ export default function GuildList() {
   }
 
   const handleScrollToTop = () => {
-    console.log('확인')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -54,7 +52,7 @@ export default function GuildList() {
     return (
       <div className="flex flex-col gap-8 items-center mt-28">
         <Spinner className="h-12 w-12" />
-        <p>조회한 길드 갯수당 40초 미만 걸립니다.</p>
+        <p>조회 길드 당 약 40초의 데이터 조회 시간이 소요됩니다.</p>
       </div>
     )
   }
@@ -88,11 +86,7 @@ export default function GuildList() {
                 />
               </div>
               {expandedGuilds[guildName] && (
-                <GuildItem
-                  world={data.world}
-                  guildIndex={data.guildIndex}
-                  guilds={filteredGuilds[guildName]}
-                />
+                <GuildItem guilds={filteredGuilds[guildName]} />
               )}
             </div>
           )
