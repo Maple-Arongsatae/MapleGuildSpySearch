@@ -1,11 +1,7 @@
 import React from 'react'
 import { Card, Typography } from '@material-tailwind/react'
 
-export default function GuildItem({ world, guilds, guildIndex }) {
-  console.log(world)
-  console.log(guilds)
-  console.log(guildIndex)
-
+export default function GuildItem({ guilds }) {
   const TABLE_HEAD = ['길드원', '소속길드', '본캐릭', '본캐릭 길드']
 
   return (
