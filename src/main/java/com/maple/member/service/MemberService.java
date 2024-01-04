@@ -1,7 +1,8 @@
 package com.maple.member.service;
 
+import com.maple.api.function.AllFunction;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.member.model.Member;
-import com.maple.member.repository.MemberRepository;
 import com.maple.member.util.dto.MemberDto;
 import java.util.List;
 import java.util.Map;
@@ -12,35 +13,17 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-    private final MemberRepository memberRepository;
+    private final AllFunction allFunction;
 
-    public void save(Member member) {
-        memberRepository.save(member);
-    }
-    public void createObj() {
-        memberRepository.createObj();
-    }
-
-    public Map<String, List<MemberDto>> getMembers() {
-        Map<String, List<Member>> allMembers = memberRepository.getMembers();
+    public Map<String, List<MemberDto>> getMembers(String world, List<String> guilds) throws CustomException {
+        Map<String, List<Member>> allMembers = allFunction.profileMaker(world, guilds);
 
         return allMembers.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().stream()
                                 .map(this::convertToDto)
-                                .collect(Collectors.toList())
-                ));
-    }
-
-    public void updateNicknames() {
-        for (Member member : memberRepository.getAllMembers()) {
-            memberRepository.getNicknames().add(member.getNickname());
-        }
-    }
-
-    public List<String> getNicknames() {
-        return memberRepository.getNicknames();
+                                .collect(Collectors.toList())));
     }
 
     private MemberDto convertToDto(Member member) {

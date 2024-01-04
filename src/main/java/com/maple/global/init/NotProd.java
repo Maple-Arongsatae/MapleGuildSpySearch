@@ -1,7 +1,6 @@
 package com.maple.global.init;
 
 import com.maple.member.model.Member;
-import com.maple.member.service.MemberTestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;

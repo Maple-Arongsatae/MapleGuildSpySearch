@@ -1,6 +1,6 @@
 package com.maple.api.function.impl;
 
-import com.maple.global.exception.advice.CustomException;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.api.function.IFunction;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -23,7 +23,7 @@ public class UnionFunction implements IFunction {
      * @return nickname(String)
      * @throws CustomException (확인 되지 않는 경우)
      */
-    public String mainCharacterNickname(String ocid, String world) throws CustomException {
+    public String mainCharacterNickname(String ocid, String world) throws Exception {
         if (ocid.equals(CHECK_DATA)) {
             return CHECK_DATA;
         }

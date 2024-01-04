@@ -1,6 +1,6 @@
 package com.maple.global.util.json;
 
-import com.maple.global.exception.advice.CustomException;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.member.model.Member;
 import java.util.ArrayList;
 import java.util.Iterator;

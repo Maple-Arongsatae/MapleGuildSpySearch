@@ -1,25 +1,25 @@
 package com.maple.api.function;
 
-import com.maple.global.exception.advice.CustomException;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.api.function.impl.CharacterFunction;
 import com.maple.api.function.impl.GuildFunction;
 import com.maple.api.function.impl.UnionFunction;
 import com.maple.home.util.validate.ListDuplicateValidator;
 import com.maple.member.model.Member;
-import com.maple.member.service.MemberService;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @AllArgsConstructor
-public class FunctionService {
+public class AllFunction {
     private final UnionFunction uf;
     private final CharacterFunction cf;
     private final GuildFunction gf;
-    private final MemberService memberService;
-
 
     /**
      * 이중길드 조회 결과 데이터 생성
@@ -28,8 +28,9 @@ public class FunctionService {
      * @param guilds
      * @throws CustomException
      */
-    public void profileMaker(String world, List<String> guilds) throws CustomException {
-        memberService.createObj(); // 메모리 DB 초기화
+    public Map<String, List<Member>> profileMaker(String world, List<String> guilds) throws Exception {
+        Map<String, List<Member>> allGuilds = new HashMap<>();
+        List<String> allNicknames = new ArrayList<>();
 
         List<String> uniqueGuilds = ListDuplicateValidator.removeDuplicates(guilds); // 길드 중복 값 제거
         List<Member> guildMembers = new ArrayList<>();
@@ -45,18 +46,34 @@ public class FunctionService {
             String mainCharacterOcid = cf.getCharacterOcid(mainCharacterNickname);
             String mainCharacterGuild = cf.getCharacterGuild(mainCharacterOcid);
             member.addMainCharterGuild(mainCharacterGuild);
-            memberService.save(member);
+
+            allGuilds.computeIfAbsent(member.getGuild(), k -> new ArrayList<>());
+
+            for (String key : allGuilds.keySet()) {
+                if (member.getGuild().equals(key)) {
+                    allGuilds.get(key)
+                            .add(member);
+                }
+            }
         }
 
-        memberService.updateNicknames();
-        List<String> nicknames = memberService.getNicknames();
+        List<Member> allMember = allGuilds.values()
+                .stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        for (Member member : allMember) {
+            allNicknames.add(member.getNickname());
+        }
 
         for (Member member : guildMembers) {
             String mainCharacterNickname = member.getMainCharacterNickname();
 
-            if (nicknames.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
+            if (allMember.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
                 member.updateSpy(false);
             }
         }
+
+        return allGuilds;
     }
 }
