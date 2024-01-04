@@ -16,10 +16,14 @@ export default function GuildList() {
   const server = location.state.server
   const guildNameInput = location.state.guilds
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ['guildData', server, guildNameInput],
     queryFn: () => fetchData(server, guildNameInput),
   })
+
+  if (isError) {
+    return <div>{error}</div>
+  }
 
   const [searchKeyword, setSearchKeyword] = useState('')
   const handleSearchSubmit = keyword => {
