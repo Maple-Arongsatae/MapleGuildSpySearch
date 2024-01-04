@@ -29,6 +29,7 @@ public class HomeController {
 
     @PostMapping("/spy")
     public ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
+        log.info(LOG_HOME + " : getSpy 시작");
         Map<String, List<MemberDto>> members = memberService.getMembers(rqDto.getWorld(), rqDto.getGuilds());
 
         return RsDto.builder()

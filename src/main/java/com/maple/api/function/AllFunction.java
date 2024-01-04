@@ -69,7 +69,7 @@ public class AllFunction {
         for (Member member : guildMembers) {
             String mainCharacterNickname = member.getMainCharacterNickname();
 
-            if (allMember.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
+            if (allNicknames.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
                 member.updateSpy(false);
             }
         }
