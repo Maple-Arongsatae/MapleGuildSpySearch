@@ -21,10 +21,6 @@ export default function GuildList() {
     queryFn: () => fetchData(server, guildNameInput),
   })
 
-  if (isError) {
-    return <div>{error}</div>
-  }
-
   const [searchKeyword, setSearchKeyword] = useState('')
   const handleSearchSubmit = keyword => {
     setSearchKeyword(keyword)
@@ -50,6 +46,10 @@ export default function GuildList() {
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  if (isError) {
+    return <div>{error}</div>
   }
 
   if (isLoading) {
