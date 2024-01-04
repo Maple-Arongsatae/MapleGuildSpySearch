@@ -28,7 +28,7 @@ public class AllFunction {
      * @param guilds
      * @throws CustomException
      */
-    public Map<String, List<Member>> profileMaker(String world, List<String> guilds) throws Exception {
+    public Map<String, List<Member>> profileMaker(String world, List<String> guilds) throws CustomException {
         Map<String, List<Member>> allGuilds = new HashMap<>();
         List<String> allNicknames = new ArrayList<>();
 

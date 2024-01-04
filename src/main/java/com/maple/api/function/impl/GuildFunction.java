@@ -18,7 +18,7 @@ public class GuildFunction implements IFunction {
      * @return guild_ocid(String)
      * @throws CustomException
      */
-    private String getGuildOcid(String guildName, String world) throws Exception {
+    private String getGuildOcid(String guildName, String world) throws CustomException {
         String url = "https://open.api.nexon.com/maplestory/v1/guild/id?"
                 + "guild_name=" + URLEncoder.encode(guildName, StandardCharsets.UTF_8)
                 + "&world_name=" + URLEncoder.encode(world, StandardCharsets.UTF_8);
@@ -34,7 +34,7 @@ public class GuildFunction implements IFunction {
      * @return guild_members(List<?>)
      * @throws CustomException
      */
-    public List<?> getGuildMembers(String guildName, String world) throws Exception {
+    public List<?> getGuildMembers(String guildName, String world) throws CustomException {
         String ocid = getGuildOcid(guildName, world);
         String url = "https://open.api.nexon.com/maplestory/v1/guild/basic?"
                 + "oguild_id=" + ocid

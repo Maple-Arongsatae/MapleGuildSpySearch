@@ -15,6 +15,7 @@ public class JsonConverter {
 
     /**
      * Json 데이터 중 단건에 대한 데이터 요청
+     *
      * @param jsonStr
      * @param jsonColumnName
      * @return
@@ -31,6 +32,7 @@ public class JsonConverter {
 
     /**
      * Json 데이터 중 배열에 대한 데이터 요청
+     *
      * @param guildName
      * @param jsonStr
      * @return
@@ -56,10 +58,10 @@ public class JsonConverter {
             return members;
 
         } catch (ParseException e) {
-            throw new CustomException(e);
+            throw new CustomException(e, "Json Parse error");
 
         } catch (NullPointerException e) {
-            throw new CustomException(e);
+            throw new CustomException(e, "조회된 데이터가 없습니다.");
         }
 
     }

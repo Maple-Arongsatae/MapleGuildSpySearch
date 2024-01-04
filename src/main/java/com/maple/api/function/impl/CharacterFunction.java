@@ -35,12 +35,16 @@ public class CharacterFunction implements IFunction {
      * @return guild(String)
      * @throws CustomException
      */
-    public String getCharacterGuild(String ocid) throws Exception {
-        String url = "https://open.api.nexon.com/maplestory/v1/character/basic?"
-                + "ocid=" + ocid
-                + "&date=" + day;
+    public String getCharacterGuild(String ocid) throws CustomException {
+        try {
+            String url = "https://open.api.nexon.com/maplestory/v1/character/basic?"
+                    + "ocid=" + ocid
+                    + "&date=" + day;
 
-        String rsData = api.getRequest(url);
-        return jsonConverter.getJsonObjData(rsData, "character_guild_name");
+            String rsData = api.getRequest(url);
+            return jsonConverter.getJsonObjData(rsData, "character_guild_name");
+        } catch (Exception e) {
+            throw new CustomException(e, "길드 조회 오류");
+        }
     }
 }

@@ -23,7 +23,7 @@ public class UnionFunction implements IFunction {
      * @return nickname(String)
      * @throws CustomException (확인 되지 않는 경우)
      */
-    public String mainCharacterNickname(String ocid, String world) throws Exception {
+    public String mainCharacterNickname(String ocid, String world) throws CustomException {
         if (ocid.equals(CHECK_DATA)) {
             return CHECK_DATA;
         }
