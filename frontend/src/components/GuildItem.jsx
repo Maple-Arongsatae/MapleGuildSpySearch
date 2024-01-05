@@ -54,7 +54,7 @@ export default function GuildItem({ guilds }) {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {nickname}
+                        <a href={`https://maple.gg/u/${nickname}`} target="_blank" rel="noopener noreferrer">{nickname}</a>
                     </Typography>
                   </td>
                   <td className="p-4">
@@ -67,13 +67,17 @@ export default function GuildItem({ guilds }) {
                     </Typography>
                   </td>
                   <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {mainCharacterNickname}
-                    </Typography>
+                    {mainCharacterNickname === "확인필요" ? (
+                      <Typography variant="small" color="blue-gray" className="font-normal">
+                        {mainCharacterNickname}
+                      </Typography>
+                    ) : (
+                      <Typography variant="small" color="blue-gray" className="font-normal">
+                        <a href={`https://maple.gg/u/${mainCharacterNickname}`} target="_blank" rel="noopener noreferrer">
+                          {mainCharacterNickname}
+                        </a>
+                      </Typography>
+                    )}
                   </td>
                   <td className="p-4">
                     <Typography

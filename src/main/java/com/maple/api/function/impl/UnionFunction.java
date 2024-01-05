@@ -1,6 +1,6 @@
 package com.maple.api.function.impl;
 
-import com.maple.global.exception.advice.CustomException;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.api.function.IFunction;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

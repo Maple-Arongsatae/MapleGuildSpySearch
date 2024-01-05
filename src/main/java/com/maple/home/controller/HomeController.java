@@ -1,25 +1,17 @@
 package com.maple.home.controller;
 
-import com.maple.api.Api;
-import com.maple.global.exception.advice.CustomException;
-import com.maple.api.function.FunctionService;
-import com.maple.home.util.dto.ErrorDto;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.home.util.dto.ResponseDTO;
 import com.maple.home.util.dto.RqDto;
 import com.maple.home.util.dto.RsDto;
 import com.maple.home.util.validate.ListDuplicateValidator;
-import com.maple.member.model.Member;
 import com.maple.member.service.MemberService;
-import com.maple.member.service.MemberTestService;
+import com.maple.member.util.dto.MemberDto;
 import jakarta.validation.Valid;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,47 +24,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/maple/guild")
 public class HomeController {
     private final MemberService memberService;
-    private final MemberTestService memberTestService;
-    private final FunctionService fs;
 
     private static final String LOG_HOME = "[" + HomeController.class.getName() + "]";
 
     @PostMapping("/spy")
     public ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
-        LocalDateTime startTime = LocalDateTime.now();
-        fs.profileMaker(rqDto.getWorld(), rqDto.getGuilds());
-        LocalDateTime endTime = LocalDateTime.now();
-        log.info(LOG_HOME + this.getClass()+" 데이터 조회 완료");
-        log.info(LOG_HOME + " API Count : '" + Api.getCount());
-
-        Duration duration = Duration.between(startTime, endTime);
-        log.info(LOG_HOME + " 데이터 조회 소요 시간 : " + duration.getSeconds()+"s");
+        log.info(LOG_HOME + " : 길드 조회 " + createStartLog(rqDto));
+        Map<String, List<MemberDto>> members = memberService.getMembers(rqDto.getWorld(), rqDto.getGuilds());
 
         return RsDto.builder()
                 .code(200)
                 .world(rqDto.getWorld())
                 .guildIndex(ListDuplicateValidator.removeDuplicates(rqDto.getGuilds()))
-                .guilds(memberService.getMembers())
+                .guilds(members)
                 .build();
     }
 
+    private String createStartLog(RqDto rqDto) {
+        StringBuilder msg = new StringBuilder();
+        msg.append(":: DataLog world : " + rqDto.getWorld() + " :: guilds [ ");
 
-    @GetMapping("/spy/test")
-    public ResponseDTO getSpyTest() {
-        try {
-            Map<String, List<Member>> members = memberTestService.getMembers();
-            return RsDto.builder()
-                    .code(200)
-                    .world("리부트")
-                    .guildIndex(List.of("새빨간", "새파란", "새까만", "샛노란"))
-                    .guilds(members)
-                    .build();
-
-        } catch (Exception e) {
-            return ErrorDto.builder()
-                    .code(500)
-                    .msg(e.getMessage())
-                    .build();
+        for (String server : rqDto.getGuilds()) {
+            msg.append(server + " ");
         }
+
+        msg.append("]");
+        return msg.toString();
     }
 }

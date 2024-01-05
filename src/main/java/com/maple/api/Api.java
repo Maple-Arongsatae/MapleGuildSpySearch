@@ -1,7 +1,7 @@
 package com.maple.api;
 
 import com.maple.api.util.ApiConfig;
-import com.maple.global.exception.advice.CustomException;
+import com.maple.global.exception.custom.CustomException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,7 +49,7 @@ public class Api {
 
             return response.toString();
         } catch (IOException e) {
-            throw new CustomException(e);
+            throw new CustomException(e, "API 접근 오류");
         }
     }
 }
