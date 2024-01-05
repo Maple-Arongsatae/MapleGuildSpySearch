@@ -58,10 +58,10 @@ public class JsonConverter {
             return members;
 
         } catch (ParseException e) {
-            throw new CustomException(e, "Json Parse error");
+            throw new CustomException(e, 500, "' " + guildName + "' 길드의 길드원 목록을 불러오던 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
 
         } catch (NullPointerException e) {
-            throw new CustomException(e, "조회된 데이터가 없습니다.");
+            throw new CustomException(e, 500, "'"+ guildName + "' 길드의 길드원 목록 조회 결과가 없습니다.");
         }
 
     }

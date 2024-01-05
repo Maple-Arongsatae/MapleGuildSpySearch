@@ -15,6 +15,7 @@ public class Api {
 
     /**
      * url을 통해 api 호출 및 결과 값 반환
+     *
      * @param urlString
      * @return josnData(String)
      * @throws CustomException
@@ -49,7 +50,7 @@ public class Api {
 
             return response.toString();
         } catch (IOException e) {
-            throw new CustomException(e, "API 접근 오류");
+            throw new CustomException(e, 429, "API 접근 오류");
         }
     }
 }
