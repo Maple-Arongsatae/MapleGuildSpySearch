@@ -1,5 +1,5 @@
 {
-  "proxy": "http://101.101.210.105:8080",
+  "proxy": "http://maplespy.site",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
