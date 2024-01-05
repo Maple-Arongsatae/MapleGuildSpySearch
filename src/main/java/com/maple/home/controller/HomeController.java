@@ -1,9 +1,9 @@
 package com.maple.home.controller;
 
 import com.maple.global.exception.custom.CustomException;
-import com.maple.home.util.dto.ResponseDTO;
-import com.maple.home.util.dto.RqDto;
-import com.maple.home.util.dto.RsDto;
+import com.maple.home.util.data.ResponseData;
+import com.maple.home.util.data.RqData;
+import com.maple.home.util.data.RsData;
 import com.maple.home.util.validate.ListDuplicateValidator;
 import com.maple.member.service.MemberService;
 import com.maple.member.util.dto.MemberDto;
@@ -28,11 +28,11 @@ public class HomeController {
     private static final String LOG_HOME = "[" + HomeController.class.getName() + "]";
 
     @PostMapping("/spy")
-    public ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
+    public ResponseData getSpy(@Valid @RequestBody RqData rqDto) throws CustomException {
         log.info(LOG_HOME + " : 길드 조회 " + createStartLog(rqDto));
         Map<String, List<MemberDto>> members = memberService.getMembers(rqDto.getWorld(), rqDto.getGuilds());
 
-        return RsDto.builder()
+        return RsData.builder()
                 .code(200)
                 .world(rqDto.getWorld())
                 .guildIndex(ListDuplicateValidator.removeDuplicates(rqDto.getGuilds()))
@@ -40,7 +40,7 @@ public class HomeController {
                 .build();
     }
 
-    private String createStartLog(RqDto rqDto) {
+    private String createStartLog(RqData rqDto) {
         StringBuilder msg = new StringBuilder();
         msg.append(":: DataLog world : " + rqDto.getWorld() + " :: guilds [ ");
 

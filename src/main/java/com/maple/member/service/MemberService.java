@@ -17,7 +17,6 @@ public class MemberService {
 
     public Map<String, List<MemberDto>> getMembers(String world, List<String> guilds) throws CustomException {
         Map<String, List<Member>> allMembers = allFunction.profileMaker(world, guilds);
-
         return allMembers.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,

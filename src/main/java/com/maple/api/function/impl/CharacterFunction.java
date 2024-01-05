@@ -13,6 +13,7 @@ public class CharacterFunction implements IFunction {
 
     /**
      * nickname을 통해 캐릭터 고유 ocid 조회
+     *
      * @param nickName
      * @return ocid(String)
      * @throws CustomException
@@ -25,12 +26,13 @@ public class CharacterFunction implements IFunction {
             String rsData = api.getRequest(url);
             return jsonConverter.getJsonObjData(rsData, "ocid");
         } catch (Exception e) {
-            throw new CustomException(e, "캐릭터 ocid 조회 오류");
+            throw new CustomException(e, 500, "캐릭터 정보 조회에 실패했습니다.");
         }
     }
 
     /**
      * ocid를 통해 캐릭터 길드 조회
+     *
      * @param ocid
      * @return guild(String)
      * @throws CustomException
@@ -44,7 +46,7 @@ public class CharacterFunction implements IFunction {
             String rsData = api.getRequest(url);
             return jsonConverter.getJsonObjData(rsData, "character_guild_name");
         } catch (Exception e) {
-            throw new CustomException(e, "길드 조회 오류");
+            throw new CustomException(e, 500,"캐릭터 길드 조회에 실패했습니다.");
         }
     }
 }
