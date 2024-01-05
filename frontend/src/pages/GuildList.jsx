@@ -9,6 +9,7 @@ import SearchBar from '../components/SearchBar'
 import { Spinner } from '@material-tailwind/react'
 import { Button } from '@material-tailwind/react'
 import { FaArrowUp } from 'react-icons/fa'
+import { Helmet } from 'react-helmet'
 
 export default function GuildList() {
   const location = useLocation()
@@ -61,50 +62,54 @@ export default function GuildList() {
     )
   }
 
-  return (
-    data && (
-      <>
-        <div className="flex w-9/12 mx-auto my-5 items-center gap-x-2 justify-between">
-          <div className="flex items-center gap-x-2">
-            <FaHome
-              className="text-lg cursor-pointer"
-              onClick={() => navigate('/')}
-            />
-            <p className="font-semibold text-lg">서버 : {data.world}</p>
-          </div>
-          <div className="flex">
-            <SearchBar onSubmit={handleSearchSubmit} />
-          </div>
-        </div>
+  const pageTitle = '길드 조회 결과'
 
-        {data.guildIndex.map(guildName => {
-          return (
-            <div key={guildName}>
-              <div className="flex w-9/12 mx-auto my-5 py-1 gap-x-2.5 items-center border-b border-gray-500">
-                <p className="font-semibold text-lg">{guildName}</p>
-                <RxTriangleDown
-                  className={`text-xl cursor-pointer transition-transform ${
-                    expandedGuilds[guildName] ? 'transform rotate-180' : ''
-                  }`}
-                  onClick={() => toggleGuild(guildName)}
-                />
-              </div>
-              {expandedGuilds[guildName] && (
-                <GuildItem guilds={filteredGuilds[guildName]} />
-              )}
-            </div>
-          )
-        })}
-        <div className="flex w-max gap-4 ml-auto fixed right-14 bottom-2.5">
-          <Button
-            color="amber"
-            className="border rounded-full"
-            onClick={handleScrollToTop}
-          >
-            <FaArrowUp className="cursor-pointe" />
-          </Button>
+  return (
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
+      data && (
+      <div className="flex w-9/12 mx-auto my-5 items-center gap-x-2 justify-between">
+        <div className="flex items-center gap-x-2">
+          <FaHome
+            className="text-lg cursor-pointer"
+            onClick={() => navigate('/')}
+          />
+          <p className="font-semibold text-lg">서버 : {data.world}</p>
         </div>
-      </>
-    )
+        <div className="flex">
+          <SearchBar onSubmit={handleSearchSubmit} />
+        </div>
+      </div>
+      {data.guildIndex.map(guildName => {
+        return (
+          <div key={guildName}>
+            <div className="flex w-9/12 mx-auto my-5 py-1 gap-x-2.5 items-center border-b border-gray-500">
+              <p className="font-semibold text-lg">{guildName}</p>
+              <RxTriangleDown
+                className={`text-xl cursor-pointer transition-transform ${
+                  expandedGuilds[guildName] ? 'transform rotate-180' : ''
+                }`}
+                onClick={() => toggleGuild(guildName)}
+              />
+            </div>
+            {expandedGuilds[guildName] && (
+              <GuildItem guilds={filteredGuilds[guildName]} />
+            )}
+          </div>
+        )
+      })}
+      <div className="flex w-max gap-4 ml-auto fixed right-14 bottom-2.5">
+        <Button
+          color="amber"
+          className="border rounded-full"
+          onClick={handleScrollToTop}
+        >
+          <FaArrowUp className="cursor-pointe" />
+        </Button>
+      </div>
+      )
+    </>
   )
 }

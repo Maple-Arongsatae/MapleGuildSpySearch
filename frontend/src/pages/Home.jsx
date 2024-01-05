@@ -7,6 +7,7 @@ import { FaSearch } from 'react-icons/fa'
 import { FaTrashAlt } from 'react-icons/fa'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -46,8 +47,13 @@ export default function Home() {
     })
   }
 
+  const pageTitle = '이중길드원을 찾아라'
+
   return (
     <>
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
       <div className="flex flex-col items-center text-center w-9/12 bg-opacity-50 border-none rounded-lg bg-gray-200 mt-14 mb-5 mx-auto p-3 w-full leading-tight">
         <p className="text-lg font-semibold">이중길드 유저 찾기</p>
         <p className="text-sm">
