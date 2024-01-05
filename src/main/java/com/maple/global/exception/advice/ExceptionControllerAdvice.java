@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionControllerAdvice {
     @ExceptionHandler(CustomException.class)
     public ResponseDTO exceptionAdapterHandler(CustomException e) {
-        log.info("[ExceptionControllerAdvice] : Exception Advice 작동");
+        log.info("[ExceptionControllerAdvice] : Exception Advice 작동 " + e.getMsg());
         return ErrorDto.builder()
                 .code(500)
                 .msg(e.getException() + " : " + e.getMsg())

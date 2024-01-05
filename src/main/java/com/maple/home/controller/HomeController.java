@@ -29,7 +29,7 @@ public class HomeController {
 
     @PostMapping("/spy")
     public ResponseDTO getSpy(@Valid @RequestBody RqDto rqDto) throws CustomException {
-        log.info(LOG_HOME + " : getSpy 시작");
+        log.info(LOG_HOME + " : 길드 조회 " + createStartLog(rqDto));
         Map<String, List<MemberDto>> members = memberService.getMembers(rqDto.getWorld(), rqDto.getGuilds());
 
         return RsDto.builder()
@@ -38,5 +38,17 @@ public class HomeController {
                 .guildIndex(ListDuplicateValidator.removeDuplicates(rqDto.getGuilds()))
                 .guilds(members)
                 .build();
+    }
+
+    private String createStartLog(RqDto rqDto) {
+        StringBuilder msg = new StringBuilder();
+        msg.append(":: DataLog world : " + rqDto.getWorld() + " :: guilds [ ");
+
+        for (String server : rqDto.getGuilds()) {
+            msg.append(server + " ");
+        }
+
+        msg.append("]");
+        return msg.toString();
     }
 }

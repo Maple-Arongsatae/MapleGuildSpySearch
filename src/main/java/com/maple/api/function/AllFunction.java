@@ -4,6 +4,7 @@ import com.maple.global.exception.custom.CustomException;
 import com.maple.api.function.impl.CharacterFunction;
 import com.maple.api.function.impl.GuildFunction;
 import com.maple.api.function.impl.UnionFunction;
+import com.maple.home.util.dto.RqDto;
 import com.maple.home.util.validate.ListDuplicateValidator;
 import com.maple.member.model.Member;
 import java.util.ArrayList;
@@ -29,51 +30,67 @@ public class AllFunction {
      * @throws CustomException
      */
     public Map<String, List<Member>> profileMaker(String world, List<String> guilds) throws CustomException {
-        Map<String, List<Member>> allGuilds = new HashMap<>();
-        List<String> allNicknames = new ArrayList<>();
+        try {
+            Map<String, List<Member>> allGuilds = new HashMap<>();
+            List<String> allNicknames = new ArrayList<>();
 
-        List<String> uniqueGuilds = ListDuplicateValidator.removeDuplicates(guilds); // 길드 중복 값 제거
-        List<Member> guildMembers = new ArrayList<>();
+            List<String> uniqueGuilds = ListDuplicateValidator.removeDuplicates(guilds); // 길드 중복 값 제거
+            List<Member> guildMembers = new ArrayList<>();
 
-        for (String guild : uniqueGuilds) {
-            guildMembers.addAll((List<Member>) gf.getGuildMembers(guild, world));
-        }
+            for (String guild : uniqueGuilds) {
+                guildMembers.addAll((List<Member>) gf.getGuildMembers(guild, world));
+            }
 
-        for (Member member : guildMembers) {
-            String characterOcid = cf.getCharacterOcid(member.getNickname());
-            String mainCharacterNickname = uf.mainCharacterNickname(characterOcid, world);
-            member.addMainNickname(mainCharacterNickname);
-            String mainCharacterOcid = cf.getCharacterOcid(mainCharacterNickname);
-            String mainCharacterGuild = cf.getCharacterGuild(mainCharacterOcid);
-            member.addMainCharterGuild(mainCharacterGuild);
+            for (Member member : guildMembers) {
+                String characterOcid = cf.getCharacterOcid(member.getNickname());
+                String mainCharacterNickname = uf.mainCharacterNickname(characterOcid, world);
+                member.addMainNickname(mainCharacterNickname);
+                String mainCharacterOcid = cf.getCharacterOcid(mainCharacterNickname);
+                String mainCharacterGuild = cf.getCharacterGuild(mainCharacterOcid);
+                member.addMainCharterGuild(mainCharacterGuild);
 
-            allGuilds.computeIfAbsent(member.getGuild(), k -> new ArrayList<>());
+                allGuilds.computeIfAbsent(member.getGuild(), k -> new ArrayList<>());
 
-            for (String key : allGuilds.keySet()) {
-                if (member.getGuild().equals(key)) {
-                    allGuilds.get(key)
-                            .add(member);
+                for (String key : allGuilds.keySet()) {
+                    if (member.getGuild().equals(key)) {
+                        allGuilds.get(key)
+                                .add(member);
+                    }
                 }
             }
-        }
 
-        List<Member> allMember = allGuilds.values()
-                .stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+            List<Member> allMember = allGuilds.values()
+                    .stream()
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList());
 
-        for (Member member : allMember) {
-            allNicknames.add(member.getNickname());
-        }
-
-        for (Member member : guildMembers) {
-            String mainCharacterNickname = member.getMainCharacterNickname();
-
-            if (allNicknames.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
-                member.updateSpy(false);
+            for (Member member : allMember) {
+                allNicknames.add(member.getNickname());
             }
+
+            for (Member member : guildMembers) {
+                String mainCharacterNickname = member.getMainCharacterNickname();
+
+                if (allNicknames.contains(mainCharacterNickname) || mainCharacterNickname.equals("확인필요")) {
+                    member.updateSpy(false);
+                }
+            }
+
+            return allGuilds;
+        } catch (Exception e) {
+            throw new CustomException(e, createErrorLog(world, guilds));
+        }
+    }
+
+    private String createErrorLog(String world, List<String> guilds) {
+        StringBuilder msg = new StringBuilder();
+        msg.append(":: ErrorLog world : " + world + " :: guilds [ ");
+
+        for (String server : guilds) {
+            msg.append(server + " ");
         }
 
-        return allGuilds;
+        msg.append("]");
+        return msg.toString();
     }
 }
