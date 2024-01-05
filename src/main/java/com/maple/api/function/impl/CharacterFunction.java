@@ -1,6 +1,6 @@
 package com.maple.api.function.impl;
 
-import com.maple.global.exception.advice.CustomException;
+import com.maple.global.exception.custom.CustomException;
 import com.maple.api.function.IFunction;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -18,11 +18,15 @@ public class CharacterFunction implements IFunction {
      * @throws CustomException
      */
     public String getCharacterOcid(String nickName) throws CustomException {
-        String url = "https://open.api.nexon.com/maplestory/v1/id?"
-                + "character_name=" + URLEncoder.encode(nickName, StandardCharsets.UTF_8);
+        try {
+            String url = "https://open.api.nexon.com/maplestory/v1/id?"
+                    + "character_name=" + URLEncoder.encode(nickName, StandardCharsets.UTF_8);
 
-        String rsData = api.getRequest(url);
-        return jsonConverter.getJsonObjData(rsData, "ocid");
+            String rsData = api.getRequest(url);
+            return jsonConverter.getJsonObjData(rsData, "ocid");
+        } catch (Exception e) {
+            throw new CustomException(e, "캐릭터 ocid 조회 오류");
+        }
     }
 
     /**
@@ -32,11 +36,15 @@ public class CharacterFunction implements IFunction {
      * @throws CustomException
      */
     public String getCharacterGuild(String ocid) throws CustomException {
-        String url = "https://open.api.nexon.com/maplestory/v1/character/basic?"
-                + "ocid=" + ocid
-                + "&date=" + day;
+        try {
+            String url = "https://open.api.nexon.com/maplestory/v1/character/basic?"
+                    + "ocid=" + ocid
+                    + "&date=" + day;
 
-        String rsData = api.getRequest(url);
-        return jsonConverter.getJsonObjData(rsData, "character_guild_name");
+            String rsData = api.getRequest(url);
+            return jsonConverter.getJsonObjData(rsData, "character_guild_name");
+        } catch (Exception e) {
+            throw new CustomException(e, "길드 조회 오류");
+        }
     }
 }

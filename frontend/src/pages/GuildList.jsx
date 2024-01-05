@@ -22,6 +22,7 @@ export default function GuildList() {
     queryFn: () => fetchData(server, guildNameInput),
   })
 
+  
   const [searchKeyword, setSearchKeyword] = useState('')
   const handleSearchSubmit = keyword => {
     setSearchKeyword(keyword)
