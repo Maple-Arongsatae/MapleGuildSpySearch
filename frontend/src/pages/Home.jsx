@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   const handleGuildNameInputChange = (index, value) => {
-    const isGuildNameVali = /^[가-힣a-zA-Z\s]+$/u.test(value)
+    const isGuildNameVali = /^[가-힣a-zA-Z_\s]+$/u.test(value)
 
     const newGuildNameInput = [...guildNameInput]
     newGuildNameInput[index] = value

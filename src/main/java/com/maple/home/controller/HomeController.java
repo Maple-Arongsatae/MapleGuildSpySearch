@@ -64,7 +64,7 @@ public class HomeController {
     }
 
     public boolean validateGuildName(String guildName) {
-        String pattern = "^[가-힣a-zA-Z]*$";
+        String pattern = "^[가-힣a-zA-Z_]*$";
         Pattern regex = Pattern.compile(pattern);
         Matcher matcher = regex.matcher(guildName);
         return matcher.matches();
