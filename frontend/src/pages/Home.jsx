@@ -13,6 +13,7 @@ export default function Home() {
   const navigate = useNavigate()
   const [selectedServer, setSelectedServer] = useState('')
   const [guildNameInput, setGuildNameInput] = useState([''])
+  const [inputErrors, setInputErrors] = useState([''])
 
   const handleServerChange = value => {
     setSelectedServer(value)
@@ -21,13 +22,27 @@ export default function Home() {
   const addGuildNameInput = () => {
     if (guildNameInput.length < 10) {
       setGuildNameInput([...guildNameInput, ''])
+      setInputErrors([...inputErrors, ''])
     }
   }
 
   const handleGuildNameInputChange = (index, value) => {
+    const isGuildNameVali = /^[가-힣a-zA-Z\s]+$/u.test(value)
+
     const newGuildNameInput = [...guildNameInput]
     newGuildNameInput[index] = value
     setGuildNameInput(newGuildNameInput)
+
+    const newInputErrors = [...inputErrors]
+    newInputErrors[index] = isGuildNameVali
+      ? ''
+      : '길드 이름은 한글, 영문자로만 입력해주세요!'
+
+    if (value.trim() === '') {
+      newInputErrors[index] = ''
+    }
+
+    setInputErrors(newInputErrors)
   }
 
   const removeGuildNameInput = index => {
@@ -36,6 +51,10 @@ export default function Home() {
       newGuildNameInput.splice(index, 1)
       setGuildNameInput(newGuildNameInput)
     }
+
+    const newInputErrors = [...inputErrors]
+    newInputErrors.splice(index, 1)
+    setInputErrors(newInputErrors)
   }
 
   const clickMove = () => {
@@ -102,7 +121,7 @@ export default function Home() {
           </Select>
         </div>
         {guildNameInput.map((guildNameInput, index) => (
-          <div className="relative flex w-full max-w-[24rem] my-2.5">
+          <div className="relative flex flex-col w-full max-w-[24rem] my-2.5">
             <Input
               key={index}
               type="text"
@@ -120,8 +139,14 @@ export default function Home() {
                 />
               }
             />
+            {inputErrors[index] && (
+              <p className="text-red-500 text-xs mt-1 p-1">
+                {inputErrors[index]}
+              </p>
+            )}
           </div>
         ))}
+
         <div className="flex gap-x-1.5">
           <Button
             color="amber"
@@ -135,7 +160,9 @@ export default function Home() {
             size="lg"
             onClick={() => clickMove()}
             disabled={
-              !selectedServer || guildNameInput.some(name => name.trim() === '')
+              !selectedServer ||
+              guildNameInput.some(name => name.trim() === '') ||
+              inputErrors.some(error => error !== '')
             }
           >
             <FaSearch />
