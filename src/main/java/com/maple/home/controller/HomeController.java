@@ -26,10 +26,12 @@ public class HomeController {
     private final MemberService memberService;
 
     private static final String LOG_HOME = "[" + HomeController.class.getName() + "]";
+    private static long count = 0L;
 
     @PostMapping("/spy")
     public ResponseData getSpy(@Valid @RequestBody RqData rqDto) throws CustomException {
-        log.info(LOG_HOME + " : 길드 조회 " + createStartLog(rqDto));
+        count++;
+        log.info(LOG_HOME + count +" :: 길드 조회 " + createStartLog(rqDto));
         Map<String, List<MemberDto>> members = memberService.getMembers(rqDto.getWorld(), rqDto.getGuilds());
 
         return RsData.builder()
